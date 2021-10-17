@@ -1,0 +1,29 @@
+CONFIG_NAME: 'pororo_sloss01'
+
+DATASET_NAME: 'pororos'
+DATA_DIR: './pororoIG/data/pororos'
+GPU_ID: 0
+WORKERS: 1
+
+RESTORE: False
+loss: 'hinge'
+
+TREE:
+    BRANCH_NUM: 1
+    BASE_SIZE: 256
+
+
+TRAIN:
+    NF: 64 # default 64
+    BATCH_SIZE: 14 #24
+    MAX_EPOCH: 130
+    NET_G: './pororoIG/tmp/pororo_sloss01/64/models/netG_120.pth'
+    WARMUP_EPOCHS: 50
+    GSAVE_INTERVAL: 5
+    DSAVE_INTERVAL: 5
+
+
+TEXT:
+    EMBEDDING_DIM: 256
+    CAPTIONS_PER_IMAGE: 10
+    DAMSM_NAME: './pororoIG/DAMSMencoders/pretrained/pororo/text_encoder_120.pth'

@@ -150,3 +150,5 @@ cython_debug/
 *.params
 *.tar
 *.txt
+*.pth
+*.pyc
