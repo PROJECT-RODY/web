@@ -62,4 +62,5 @@ class send_email():
 if __name__ == '__main__':
     emails = ["minchan1472@naver.com", "minchan1472@gmail.com",'skdk@jd@.dkd@,d,']
     email_sender = send_email()
-    email_sender.send_pdf(emails, '제목', '내용', './user_image/single_s9.png')
+    # email_sender.send_pdf(emails, '제목', '내용', './user_image/single_s9.png')
+    email_sender.send_pdf(emails, '제목', '내용', './pdf/single_s9.pdf')
