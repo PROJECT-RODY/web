@@ -1,18 +1,65 @@
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
+import os
 import smtplib
 import json
-
-with open('./email_info.json') as f:
-    SETTING = json.load(f)
+import re
 
 
-print(SETTING.SERVER)
+class send_email():
+    def __init__(self,):
+        with open('./email_info.json') as f:
+            SETTING = json.load(f)
 
-smtp_server = smtplib.SMTP(host='smtp.gmail.com', port=587) # SMTP 서버 TSL방식으로 접속
+        self.server_add = SETTING['SERVER']
+        self.server_port = SETTING['PORT']
+        self.sender = SETTING['USER']
+        self.sender_pw = SETTING['PASSWORD']
 
-hello_message = smtp_server.ehlo() # SMTP서버에 hello 메시지 보냄
-print(hello_message,"\n")
+    def email_check(self, email):
+        regex = '^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 
-bye_message = smtp_server.quit() # 종료
-print(bye_message)
+        if re.match(regex, email):
+            return True
+        return False
+
+    def send_pdf(self, emails, subject, content, attach=None):
+        for email in emails:
+            if not self.email_check(email):
+                print("이메일 주소 오류")
+                return
+            
+            if attach:
+                mime=MIMEMultipart('mixed')
+            else :
+                mime=MIMEMultipart('alternative')
+
+            mime['From'] = self.sender
+            mime['To'] = email
+            mime['Subject'] = subject
+
+            contents = content
+            text = MIMEText(_text = contents, _charset = 'utf-8')
+            mime.attach(text)
+
+            if attach:
+                data = MIMEBase('application', 'octect-stream')
+                data.set_payload(open(attach, 'rb').read())
+                encoders.encode_base64(data)
+
+                filename = os.path.basename(attach)
+                data.add_header('Content-Disposition', 'attachment', filename=('UTF-8', '', filename))
+                mime.attach(data)
+
+            smtp = smtplib.SMTP_SSL(self.server_add, self.server_port)
+            smtp.login(self.sender, self.sender_pw)
+            smtp.sendmail(self.sender, email, mime.as_string())
+            smtp.close()
+            print("메일 발송 완료")
+
+if __name__ == '__main__':
+    emails = ["minchan1472@naver.com", "minchan1472@gmail.com",'skdk@jd@.dkd@,d,']
+    email_sender = send_email()
+    email_sender.send_pdf(emails, '제목', '내용', './user_image/single_s9.png')
