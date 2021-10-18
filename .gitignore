@@ -153,3 +153,4 @@ cython_debug/
 *.pth
 *.pyc
 *.png
+email_info.json
