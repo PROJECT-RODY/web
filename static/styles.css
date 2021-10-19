@@ -1,0 +1,88 @@
+h3{
+    color: #2C2891;
+    
+}
+body{
+    background-color: #fff;
+}
+img{
+    width:256px; 
+	height:256px;
+    border-radius: 5px;
+}
+textarea{
+    font-size: 20px;
+	width:500px; 
+	height:50px; 
+    resize:none;/* 크기고정 */ 
+    border-radius: 5px;
+/*   resize: horizontal; // 가로크기만 조절가능 
+	resize: vertical;  세로크기만 조절가능  */
+}
+.header{
+    background-color: #f8fabd;
+    width:auto; 
+	height:200px;
+    border-radius: 20px;
+}
+.story_g{
+    background-color: #B5DEFF;
+    width: 35%;
+    height: auto;
+    border-radius: 20px;
+}
+
+.image_g{
+    background-color: #B5DEFF;
+    width: 35%;
+    height: auto;
+    border-radius: 20px;
+}
+
+
+
+
+input::placeholder {
+    color: red;
+    opacity: 1; /* 파이어폭스에서 뿌옇게 나오는 현상을 방지하기 위한 css */
+}
+
+button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background: rgb(219, 245, 229);
+    color: var(--button-color);
+
+    margin: 0;
+    padding: 0.5rem 1rem;
+
+    /* font-family: 'Sunflower', sans-serif; */
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+
+    border: none;
+    border-radius: 4px;
+
+    display: inline-block;
+    width: auto;
+
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+    cursor: pointer;
+
+    transition: 0.5s;
+}
+
+button.hover3:hover{
+    box-shadow: 0 80px 0 0 rgba(0,0,0,0.25) inset,
+        0 -80px 0 0 rgba(0,0,0,0.25) inset;
+  
+    --button-bg-color: hsl(219, 54%, 55%);
+    --button-hover-bg-color: hsl(219, 54%, 55%);
+    color: cornsilk;
+  }

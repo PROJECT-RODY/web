@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RODY</title>
+    <link href="../static/styles.css" rel="stylesheet">
+    <style>
+        .pdf_g{
+            display: none;
+            background-color: #B5DEFF;
+            width: 35%;
+            height: auto;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+
+    </div>
+    <dic>
+        <br>
+        <br>
+    </dic>
+    <div style="width: auto; height: auto; display: flex;">
+        <div style="width: 13%; height: auto;">
+        </div>
+        <!-- 이야기 생성기 필드 시작 -->
+        <div class="story_g" id="story_g">
+            <div style="text-align: center;">
+                <br>
+                <br>
+                <form method="post" style="display: inline-block;">
+                    <h3>제목</h3>
+                    <textarea name="title_field" value={{ title_field }}>{{ title_field }}</textarea>
+                    <h3>내용</h3>
+                    <textarea name="story_field" style="height:350px;" value={{ story_field }}>{{ story_field }}</textarea>
+                    <textarea name="counter" style="display: none;" value={{ counter }}>{{ counter }}</textarea>
+                    <br>
+                    <textarea name="img_field" style="display: none;" value={{ generate_img }}>{{ generate_img }}</textarea>
+                    <br>
+                    <button type="submit" class="button hover3">이야기 생성</button>
+                </form>
+                <br>
+                <br>
+            </div>
+        </div>
+        <!-- 이야기 생성기 필드 끝 -->
+        <div id="middle_div" style="width: 4%; height: auto;">
+        </div>
+        <div id="pdf_gen_l" style="width: 19%; height: auto; display: none;">
+        </div>
+        <div id="pdf_gen" style="background-color: #B5DEFF; width: 35%; display: none; border-radius: 20px;">
+            <div style="text-align: center;">
+                <h4>{{ error_m }}</h4>
+                <form method="post" style="display: inline-block;">
+                    <textarea id ="pdf_path" name = "pdf_path" style="display: none;" value={{ pdf_path }}>{{ pdf_path }}</textarea>
+                    <textarea id ="input_email" name = "input_email" style="width: 300px; height:25px;font-size: 15px;" value={{ input_email }}>{{ input_email }}</textarea>
+                    <br>
+                    <textarea name="title_field" style="display: none;" value={{ title_field }}>{{ title_field }}</textarea>
+                    <br>
+                    <button type="submit" class="button hover3">pdf 발송</button>
+                </form>
+                <br>
+                <br>
+            </div>
+        </div>
+        <div id="pdf_gen_r" style="width: 13%; height: auto;display: none;">
+        </div>
+        <!-- 이미지 생성기 필드 시작  -->
+        <div class="image_g" id="image_g">
+            <div style="text-align: center;">
+                <br>
+                <br>
+                <img src={{generate_img}} id="generate_img" style="display: none;" value={{ generate_img }}>
+                <br>
+                <form method="post" style="display: inline-block;" id="image_post_form">
+                    <h4>생성할 그림에 대한 상활설명을 적어주세요.</h4>
+                    <h5>1가지 이상의 상황을 입력.</h5>
+                    <br>
+                    <h3>상황 1</h3>
+                    <textarea name="situation_field_1" value={{ situation_field_1 }}>{{ situation_field_1 }}</textarea>
+                    <h3>상황 2</h3>
+                    <textarea name="situation_field_2" value={{ situation_field_2 }}>{{ situation_field_2 }}</textarea>
+                    <h3>상황 3</h3>
+                    <textarea name="situation_field_3" value={{ situation_field_3 }}>{{ situation_field_3 }}</textarea>
+                    <br>
+                    <textarea name="title_field" style="display: none;" value={{ title_field }}>{{ title_field }}</textarea>
+                    <textarea name="story_field" style="display: none;" value={{ story_field }}>{{ story_field }}</textarea>
+                    <br>
+                    <button type="submit" class="button hover3">이미지 생성</button>
+                </form>
+                <form method="post" style="display: none;" id="create_pdf">
+                    <br>
+                    <br>
+                    <textarea name="title_field" style="display: none;" value={{ title_field }}>{{ title_field }}</textarea>
+                    <textarea name="story_field" style="display: none;" value={{ story_field }}>{{ story_field }}</textarea>
+                    <textarea id="pdf_img" name="generate_img" style="display: none;" value={{ generate_img }}>{{ generate_img }}</textarea>
+                    <button type="submit" class="button hover3">PDF 생성</button>
+                </form>
+                <br>
+                <br>
+            </div>
+        </div>
+        <!-- 이미지 생성기 필드 끝 -->
+        <div style="width: 13%; height: auto;">
+            
+        </div>
+    </div>
+    <script>
+        if (document.getElementById("pdf_path").value != ""){
+            document.getElementById("story_g").style.display = "none";
+            document.getElementById("image_g").style.display = "none";
+            document.getElementById("middle_div").style.display = "none";
+            document.getElementById("pdf_gen").style.display = "";
+            document.getElementById("pdf_gen_l").style.display = "";
+            document.getElementById("pdf_gen_r").style.display = "";
+        }
+
+        else if (document.getElementById("generate_img").value != "./static/user_image/single_s2.png"){
+            document.getElementById("image_post_form").style.display = "none";
+            document.getElementById("generate_img").style.display = "";
+            document.getElementById("create_pdf").style.display = "";
+        }
+
+        
+        
+        // function show_image() {
+        //     document.getElementById("image_post_form").style.display = "none";
+        //     document.getElementById("generate_img").style.display = "";
+        // }
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RODY</title>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+
+    </div>
+    <dic>
+        <br>
+        <br>
+    </dic>
+    <div style="width: auto; height: auto; display: flex;">
+        <div style="width: 33%; height: auto;">
+        </div>
+        <!-- 이미지 생성기 필드 시작  -->
+        <div class="image_g"> 
+            <div style="text-align: center;">
+                <h4>이메일을 입력하세요</h4>
+                <form method="post" style="display: inline-block;" id="create_pdf">
+                    <textarea style="width: 300px; height:25px;font-size: 15px;"></textarea>
+                    <br>
+                    <br>
+                    <button type="submit" class="button hover3">pdf 발송</button>
+                </form>
+                <br>
+                <br>
+            </div>
+        </div>
+        <!-- 이미지 생성기 필드 끝 -->
+        <div style="width: 33%; height: auto;">
+            
+        </div>
+    </div>
+</body>
+</html>

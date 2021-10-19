@@ -2,7 +2,9 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from fpdf import FPDF
 
-def create_pdf(title, sentence, image_name):
+def create_pdf(title, sentences, image_name):
+    
+
     pdf = FPDF()
     
     # Adding a page
@@ -12,8 +14,7 @@ def create_pdf(title, sentence, image_name):
     # set style and size of font 
     # pdf.set_font("malgun", size = 30)
     
-
-    pdf.image('./user_image/'+image_name+'.png', x = 60, )# 이미지 가로축 위치 설정
+    pdf.image('./static/user_image/'+image_name+'.png', x = 60, )# 이미지 가로축 위치 설정
     # create a cell
     pdf.set_font("malgun", size = 30)
     pdf.cell(200, 10, txt = "", ln = 1, align = 'C')
@@ -23,10 +24,22 @@ def create_pdf(title, sentence, image_name):
     
     # add another cell
     pdf.set_font("malgun", size = 15)
-    pdf.cell(200, 10, txt = sentence, ln = 4, align = 'C')
+    sentence = ''
+    num_c = 0
+    for i, s in enumerate(sentences.split(' ')):
+        sentence += s + " "
+        if i % 8 == 0:
+            pdf.cell(200, 10, txt = sentence, ln = 4+num_c, align = 'C')
+            sentence = ''
+            num_c+=1
+            
     
+
     # save the pdf
-    pdf.output("./pdf/"+image_name+".pdf")
+    save_path = "./static/pdf/"+image_name+".pdf"
+    pdf.output(save_path)
+
+    return save_path
 
 
 
