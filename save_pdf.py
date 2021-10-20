@@ -14,7 +14,7 @@ def create_pdf(title, sentences, image_name):
     # set style and size of font 
     # pdf.set_font("malgun", size = 30)
     
-    pdf.image('./static/user_image/'+image_name+'.png', x = 60, )# 이미지 가로축 위치 설정
+    pdf.image(image_name, x = 60, )# 이미지 가로축 위치 설정
     # create a cell
     pdf.set_font("malgun", size = 30)
     pdf.cell(200, 10, txt = "", ln = 1, align = 'C')
@@ -34,9 +34,8 @@ def create_pdf(title, sentences, image_name):
             num_c+=1
             
     
-
     # save the pdf
-    save_path = "./static/pdf/"+image_name+".pdf"
+    save_path = "./static/pdf/"+image_name[20:-4]+".pdf"
     pdf.output(save_path)
 
     return save_path
@@ -59,5 +58,5 @@ def create_word(title, sentence, image_name):
 
 if __name__ == '__main__':
     # create_word("나무꾼", "나무꾼이 나무를 한다.", "single_s9")
-    create_pdf("나무꾼", "나무꾼이 나무를 한다.", "single_s9")
+    create_pdf("나무꾼", "나무꾼이 나무를 한다.", "./static/user_image/text_0.png")
     

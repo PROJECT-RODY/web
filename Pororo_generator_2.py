@@ -22,40 +22,56 @@ from pororoIG.model import NetG
 from nltk.tokenize import RegexpTokenizer # 추가
 import pickle
 
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Train a DAMSM network')
+    parser.add_argument('--cfg', dest='cfg_file',
+                        help='optional config file',
+                        default='./pororoIG/cfg/pororo.yml', type=str) # cfg/bird.yml
+    parser.add_argument('--gpu', dest='gpu_id', type=int, default=0)
+    parser.add_argument('--data_dir', dest='data_dir', type=str, default='')
+    parser.add_argument('--manualSeed', type=int, help='manual seed')
+    print(parser)
+    args = parser.parse_args()
+    return args
+
+
 class pororo_GAN():
     def __init__(self,):
-        self.gpu_id = 0
-        self.cfg_file = './pororoIG/cfg/pororo.yml'
-        self.data_dir = './pororoIG/data/pororos'
-        self.manualSeed = 100
+        self.args.gpu_id = 0
+        self.args.cfg_file = './pororoIG/cfg/pororo.yml'
+        self.args.data_dir = './pororoIG/data/pororos'
+        self.args.manualSeed = 100
 
         # self.args = parse_args()
-        if self.cfg_file is not None:
-            cfg_from_file(self.cfg_file)
+        print(self.args)
+        if self.args.cfg_file is not None:
+            cfg_from_file(self.args.cfg_file)
         
 
-        if self.gpu_id == -1:
+        if self.args.gpu_id == -1:
             cfg.CUDA = False
         else:
-            cfg.GPU_ID = self.gpu_id
+            cfg.GPU_ID = self.args.gpu_id
 
-        if self.data_dir != '':
-            cfg.DATA_DIR = self.data_dir
+        if self.args.data_dir != '':
+            cfg.DATA_DIR = self.args.data_dir
         print('Using config:')
         pprint.pprint(cfg)
 
         if not cfg.TRAIN.FLAG:
-            self.manualSeed = 100
-        elif self.manualSeed is None:
-            self.manualSeed = 100
+            self.args.manualSeed = 100
+        elif self.args.manualSeed is None:
+            self.args.manualSeed = 100
+            #args.manualSeed = random.randint(1, 10000)
 
-        print("seed now is : ", self.manualSeed)
-        random.seed(self.manualSeed)
-        np.random.seed(self.manualSeed)
-        torch.manual_seed(self.manualSeed)
+        print("seed now is : ", self.args.manualSeed)
+        random.seed(self.args.manualSeed)
+        np.random.seed(self.args.manualSeed)
+        torch.manual_seed(self.args.manualSeed)
 
         if cfg.CUDA:
-            torch.cuda.manual_seed_all(self.manualSeed)
+            torch.cuda.manual_seed_all(self.args.manualSeed)
 
         ##########################################################################
         now = datetime.datetime.now(dateutil.tz.tzlocal())
@@ -148,7 +164,7 @@ class pororo_GAN():
         fullpath = '%s%s.png' % (s_tmp, img_name)
         im.save(fullpath)
         print('%s에 이미지 생성' % (fullpath))
-        return s_tmp+img_name
+        return img_name
 
 if __name__ == '__main__':
     pororo_g = pororo_GAN()

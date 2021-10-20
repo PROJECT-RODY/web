@@ -6,10 +6,15 @@ from fastapi.responses import RedirectResponse
 import json
 from KoSG import main
 import torch
+
 import save_pdf
 from send_email import email_sender
+from pororoIG import Pororo_Generator
+import pororoIG
+import test2
 
-# 이미지 생성기 모델 로드 시작.
+pororo_g = Pororo_Generator.pororo_GAN()
+# 이야기 생성기 모델 로드 시작.
 with open('./KoSG/cfg/config_json.json') as f:
     cfg = json.load(f)
 
@@ -18,9 +23,10 @@ model, vocab_b_obj = pororo_gpt2.model, pororo_gpt2.vocab_b_obj
 vocab, sentencepieceTokenizer = vocab_b_obj.get_vocab(), vocab_b_obj.tokenize
 model.eval()
 revers_vocab = {v:k for k,v in vocab.items()}
-# 이미지 생성기 로드 끝
+# 이야기 생성기 로드 끝
+ # 이미지 생성시
 
-email_send = email_sender()
+email_send = email_sender() # 이메일 발송
 
 def story_generator(title, story, counter):
     if story != "":
@@ -69,13 +75,15 @@ async def form_post(request: Request, pdf_path: str = Form(""), title_field: str
             return templates.TemplateResponse('create_pororo.html', context={'request': request, 'title_field': title_field, 'pdf_path': pdf_path, 'input_email' : input_email, 'error_m' : "이메일을 입력하세요"})
     
     elif situation_field_1 != "" or situation_field_2 != "" or situation_field_3 != "":
-        generate_img = "./static/user_image/"+"single_s9"+".png"
-        print(generate_img)
+        cap = situation_field_1 + situation_field_2 + situation_field_3
+        img_name = 'text_0'
+        
+        generate_img = pororo_g.generate(cap, img_name) + ".png"
         return templates.TemplateResponse('create_pororo.html', context={'request': request, 'title_field': title_field, 'story_field': story_field, 'generate_img': generate_img})
         
 
     elif generate_img != "":
-        pdf_path = save_pdf.create_pdf(title_field, story_field, "single_s9")
+        pdf_path = save_pdf.create_pdf(title_field, story_field, generate_img)
         return templates.TemplateResponse('create_pororo.html', context={'request': request,'pdf_path': pdf_path, 'error_m' : "이메일을 입력하세요"})
 
     else :
