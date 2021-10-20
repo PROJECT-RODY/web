@@ -7,13 +7,16 @@ import json
 from KoSG import main
 import torch
 
+import os
 import save_pdf
 from send_email import email_sender
 from pororoIG import Pororo_Generator
 import pororoIG
 import test2
+import papago_api
 
-pororo_g = Pororo_Generator.pororo_GAN()
+
+pororo_g = Pororo_Generator.pororo_GAN()# 이미지 생성기
 # 이야기 생성기 모델 로드 시작.
 with open('./KoSG/cfg/config_json.json') as f:
     cfg = json.load(f)
@@ -24,7 +27,9 @@ vocab, sentencepieceTokenizer = vocab_b_obj.get_vocab(), vocab_b_obj.tokenize
 model.eval()
 revers_vocab = {v:k for k,v in vocab.items()}
 # 이야기 생성기 로드 끝
- # 이미지 생성시
+
+trans = papago_api.papago()# 파파고 번역기 로드
+
 
 email_send = email_sender() # 이메일 발송
 
@@ -75,10 +80,20 @@ async def form_post(request: Request, pdf_path: str = Form(""), title_field: str
             return templates.TemplateResponse('create_pororo.html', context={'request': request, 'title_field': title_field, 'pdf_path': pdf_path, 'input_email' : input_email, 'error_m' : "이메일을 입력하세요"})
     
     elif situation_field_1 != "" or situation_field_2 != "" or situation_field_3 != "":
-        cap = situation_field_1 + situation_field_2 + situation_field_3
-        img_name = 'text_0'
+        caps = [[situation_field_1],[situation_field_2],[situation_field_3]]
+        situation = ''
+        if situation_field_1 != '':
+            situation += trans.get_translate(situation_field_1) + ' '
+
+        if situation_field_2 != '':
+            situation += trans.get_translate(situation_field_2) + ' '
+
+        if situation_field_3 != '':
+            situation += trans.get_translate(situation_field_3) + ' '
         
-        generate_img = pororo_g.generate(cap, img_name) + ".png"
+        img_name = 'text_2'
+
+        generate_img = pororo_g.generate(situation[:-1], img_name) + ".png"
         return templates.TemplateResponse('create_pororo.html', context={'request': request, 'title_field': title_field, 'story_field': story_field, 'generate_img': generate_img})
         
 
