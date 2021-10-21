@@ -18,7 +18,7 @@ class pororo_gtp2():
         self.epochs=cfg['epochs'] 
         self.save_model_path = cfg['save_model_path']
         self.ctx = 'cuda'
-        self.model, self.vocab_b_obj= self.model_load("gt_checkpoint_2.tar", cfg['kogpt2_config'])
+        self.model, self.vocab_b_obj= self.model_load("aesop_checkpoint_2_110_3.tar", cfg['kogpt2_config']) # gt_checkpoint_2
 
     def model_load(self, checkpoint_name, kogpt2_config):
         if self.save_model_path == '':

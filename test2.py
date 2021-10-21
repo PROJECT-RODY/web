@@ -12,6 +12,16 @@ pororo_g = pororo_GAN()
 # Pororo starts walking with friends
 # Pororo starts walking around with his friends.
 
-cap = "Pororo is on the snow-covered ground. Pororo starts to walk around. Pororo looks around."
+# cap = "Pororo is on the snow-covered ground. Pororo starts to walk around. Pororo looks around."
+# cap = "Pororo is on the snow-covered ground. Pororo opens his mouth and moves his arms fast."
+# cap = "Pororo is on the snow-covered ground. Pororo is blocking his ears and opening his mouth."
+cap=''
 idx = '16'
-pororo_g.generate(cap, idx)
+# pororo_g.generate(cap, idx)
+
+while True:
+    try:
+        cap = input("입력\n")
+        pororo_g.generate(cap, idx)
+    except :
+        break

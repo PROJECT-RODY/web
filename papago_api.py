@@ -36,7 +36,7 @@ if __name__ == '__main__':
     cap_3 = "뽀로로는 눈으로 덮인 땅 위에 있습니다."
     trans = t_papa.get_translate(cap_3)
     print(trans)
-    
+    # 뽀로로는 입을 벌리고 팔을 빠르게 움직입니다., 뽀로로는 입을 벌리고 있습니다.    
 
     cap_4 = "뽀로로가 걸어 다니기 시작합니다."
     trans = t_papa.get_translate(cap_4)
@@ -47,4 +47,8 @@ if __name__ == '__main__':
     trans = t_papa.get_translate(cap_5)
     print(trans)
 
+    # Pororo is on the snow-covered ground. 뽀로로는 눈으로 덮인 땅 위에 있습니다.
+    # Pororo is sliding down the snowy hill. 뽀로로가 눈 덮인 언덕을 미끄러져 내려가고 있습니다.
+    # Pororo opens his mouth and moves his arms quickly. 뽀로로는 입을 벌리고 팔을 빠르게 움직입니다.
     
+    Pororo is on the snowy ground. Pororo is sliding down the snowy hill. Pororo opens his mouth and moves his arms quickly.

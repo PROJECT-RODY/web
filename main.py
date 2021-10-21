@@ -12,7 +12,6 @@ import save_pdf
 from send_email import email_sender
 from pororoIG import Pororo_Generator
 import pororoIG
-import test2
 import papago_api
 
 

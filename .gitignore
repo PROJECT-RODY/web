@@ -155,6 +155,8 @@ cython_debug/
 *.png
 email_info.json
 papago_info.json
+test.py
+test2.py
 *.pkl
 *.pdf
 *.docx
