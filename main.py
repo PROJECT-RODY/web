@@ -117,4 +117,35 @@ async def form_post(request: Request, pdf_path: str = Form(""), title_field: str
 #     return templates.TemplateResponse('create_pdf.html', context={'request': request,'pdf_path': pdf_path})
  
 
+@app.post('/create_story')
+async def form_post(request: Request, user_title: str = Form(""), user_story: str = Form(""), user_counter: str = Form("")):
+    print(user_title, user_story, user_counter)
+    story_field = story_generator(user_title, user_story, int(user_counter))
+    print(story_field)
+    return story_field
 
+@app.post('/create_image')
+async def form_post(request: Request, situation_field_1: str = Form(""), situation_field_2: str = Form(""), situation_field_3: str = Form("")):
+    print(situation_field_1, situation_field_2, situation_field_3)
+    caps = [[situation_field_1],[situation_field_2],[situation_field_3]]
+    situation = ''
+    if situation_field_1 != '':
+        situation += trans.get_translate(situation_field_1) + ' '
+
+    if situation_field_2 != '':
+        situation += trans.get_translate(situation_field_2) + ' '
+
+    if situation_field_3 != '':
+        situation += trans.get_translate(situation_field_3) + ' '
+    
+    img_name = 'text_5'
+
+    generate_img = pororo_g.generate(situation[:-1], img_name) + ".png"
+
+    return img_name
+
+@app.post('/create_result')
+async def form_post(request: Request, user_email: str = Form(""), pdf_path: str = Form("")):
+    print(title_field, story_field, generate_img, pdf_path)
+    email_send.send_pdf([input_email], '"RODY로 작성한 이야기를 발송 하였습니다."', '완성된 이야기를 발송하였습니다.', pdf_path)
+    return "create_result"

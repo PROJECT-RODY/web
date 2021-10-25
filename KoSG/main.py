@@ -18,7 +18,7 @@ class pororo_gtp2():
         self.epochs=cfg['epochs'] 
         self.save_model_path = cfg['save_model_path']
         self.ctx = 'cuda'
-        self.model, self.vocab_b_obj= self.model_load("aesop_checkpoint_2_110_3.tar", cfg['kogpt2_config']) # gt_checkpoint_2
+        self.model, self.vocab_b_obj= self.model_load("pororo.tar", cfg['kogpt2_config']) # aesop_checkpoint_2_110_3
 
     def model_load(self, checkpoint_name, kogpt2_config):
         if self.save_model_path == '':
@@ -39,7 +39,7 @@ class pororo_gtp2():
             kogpt2model.load_state_dict(checkpoint['model_state_dict'])
             kogpt2model.eval() # 예측
 
-        vocab_b_obj = PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2", bos_token='<s>', eos_token='</s>', unk_token='<unk>',  pad_token='<pad>', mask_token='<mask>')
+        vocab_b_obj = PreTrainedTokenizerFast.from_pretrained("./KoSG/data/tokenizer", bos_token='<s>', eos_token='</s>', unk_token='<unk>',  pad_token='<pad>', mask_token='<mask>')
 
         return kogpt2model, vocab_b_obj
         
