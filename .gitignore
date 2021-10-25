@@ -158,6 +158,7 @@ papago_info.json
 test.py
 test1.py
 test2.py
+*.json
 *.pkl
 *.pdf
 *.docx
