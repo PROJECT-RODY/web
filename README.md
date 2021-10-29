@@ -1,4 +1,5 @@
 #### WEB
+[APP 시연](https://youtu.be/sV3KIN0TWTY)
 ---
 > 텍스트 생성 모델, 이미지 생성 모델을 사용하는 웹.
 >
