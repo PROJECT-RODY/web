@@ -26,12 +26,15 @@ def create_pdf(title, sentences, image_name):
     pdf.set_font("malgun", size = 15)
     sentence = ''
     num_c = 0
+    len_sentence = len(sentences.split(' '))
     for i, s in enumerate(sentences.split(' ')):
         sentence += s + " "
         if i % 8 == 0:
             pdf.cell(200, 10, txt = sentence, ln = 4+num_c, align = 'C')
             sentence = ''
             num_c+=1
+        elif len_sentence - 1 == i:
+            pdf.cell(200, 10, txt = sentence, ln = 4+num_c, align = 'C')
             
     
     # save the pdf
@@ -40,6 +43,46 @@ def create_pdf(title, sentences, image_name):
 
     return save_path
 
+def create_pdf_app(title, sentences, image_name):
+    
+
+    pdf = FPDF()
+    
+    # Adding a page
+    pdf.add_page()
+
+    pdf.add_font('malgun', '', '/usr/share/fonts/truetype/malgun.ttf', uni=True) # 한글 폰트 추가
+    # set style and size of font 
+    # pdf.set_font("malgun", size = 30)
+    
+    pdf.image("./static/user_image/"+image_name+".png", x = 60, )# 이미지 가로축 위치 설정
+    # create a cell
+    pdf.set_font("malgun", size = 30)
+    pdf.cell(200, 10, txt = "", ln = 1, align = 'C')
+    pdf.cell(200, 10, txt = title, ln = 2, align = 'C')
+    pdf.cell(200, 10, txt = "", ln = 3, align = 'C')
+    
+    
+    # add another cell
+    pdf.set_font("malgun", size = 15)
+    sentence = ''
+    num_c = 0
+    len_sentence = len(sentences.split(' '))
+    for i, s in enumerate(sentences.split(' ')):
+        sentence += s + " "
+        if i % 8 == 0:
+            pdf.cell(200, 10, txt = sentence, ln = 4+num_c, align = 'C')
+            sentence = ''
+            num_c+=1
+        elif len_sentence - 1 == i:
+            pdf.cell(200, 10, txt = sentence, ln = 4+num_c, align = 'C')
+            
+    
+    # save the pdf
+    save_path = "./static/pdf/"+image_name+".pdf"
+    pdf.output(save_path)
+
+    return save_path
 
 
 def create_word(title, sentence, image_name):

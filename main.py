@@ -3,19 +3,23 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
+
 import json
-from KoSG import main
 import torch
-
+import re
 import os
-import save_pdf
-from send_email import email_sender
+
+from KoSG import main
 from pororoIG import Pororo_Generator
-import pororoIG
+
+from send_email import email_sender
 import papago_api
+import save_pdf
 
+pororo_g = Pororo_Generator.pororo_GAN()
 
-pororo_g = Pororo_Generator.pororo_GAN()# 이미지 생성기
+# 이미지 생성기
+
 # 이야기 생성기 모델 로드 시작.
 with open('./KoSG/cfg/config_json.json') as f:
     cfg = json.load(f)
@@ -57,8 +61,8 @@ templates = Jinja2Templates(directory="templates")
 @app.get('/create_pororo')
 def form_post(request: Request):
     
-    counter = 1
-    if counter == 1:
+    counter = 0
+    if counter == 0:
         title_field = "제목을 입력하세요."
     result = 'Type a number' + str(counter)
     generate_img=""
@@ -103,6 +107,7 @@ async def form_post(request: Request, pdf_path: str = Form(""), title_field: str
     else :
         counter += 1
         story_field = story_generator(title_field, story_field, counter)
+        story_field = re.sub(r'\<[^)]*\>', ' 이야기 끝!', story_field)
         return templates.TemplateResponse('create_pororo.html', context={'request': request, 'title_field': title_field, 'story_field': story_field, 'counter' : counter})
 
 
@@ -121,6 +126,7 @@ async def form_post(request: Request, pdf_path: str = Form(""), title_field: str
 async def form_post(request: Request, user_title: str = Form(""), user_story: str = Form(""), user_counter: str = Form("")):
     print(user_title, user_story, user_counter)
     story_field = story_generator(user_title, user_story, int(user_counter))
+    story_field = re.sub(r'\<[^)]*\>', ' 이야기 끝!', story_field)
     print(story_field)
     return story_field
 
@@ -145,7 +151,13 @@ async def form_post(request: Request, situation_field_1: str = Form(""), situati
     return img_name
 
 @app.post('/create_result')
-async def form_post(request: Request, user_email: str = Form(""), pdf_path: str = Form("")):
-    print(title_field, story_field, generate_img, pdf_path)
-    email_send.send_pdf([input_email], '"RODY로 작성한 이야기를 발송 하였습니다."', '완성된 이야기를 발송하였습니다.', pdf_path)
-    return "create_result"
+async def form_post(request: Request, user_title: str = Form(""), user_story: str = Form(""), user_image: str = Form(""), user_email: str = Form("")):
+    print(user_title, user_story, user_image, user_email)
+    pdf_path = save_pdf.create_pdf_app(user_title, user_story, user_image)
+    email_flg = email_send.send_pdf([user_email], '"RODY로 작성한 이야기를 발송 하였습니다."', '완성된 이야기를 발송하였습니다.', pdf_path)
+    if email_flg:
+        return "이메일이 정상적으로 발송 되었습니다."
+    else:
+        return "이메일 주소를 잘못 입력 하였습니다."
+
+    
