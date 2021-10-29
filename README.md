@@ -22,3 +22,13 @@
 > 
 > 모든과정 정상적으로 수행되는것 확인
 > 
+---
+> 이미지 생성 모델과 이야기 생성 모델의 훈련관련 사항은 각각 아래 링크를 참고하여 응용하면 된다.
+> - [이미지 생성 모델 링크](https://github.com/PROJECT-RODY/Image-Generator)
+> 
+> - [이야기 생성 모델 링크](https://github.com/PROJECT-RODY/Korean-Story-Generator)
+> 
+> 현재 web와 app를 같은 fastAPI프레임워크로 처리하며 요청을 보내는 링크(주소)만 다르다.
+> 
+> app의 경우는 입력값을 전송, 서버에서 처리한 결과값을 화면에 표시하는 역할만 한다.
+> 
