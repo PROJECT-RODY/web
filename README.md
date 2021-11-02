@@ -1,6 +1,8 @@
 #### WEB
 [APP 시연](https://youtu.be/sV3KIN0TWTY)
 ---
+- 훈련된 모델은 [링크](https://drive.google.com/drive/folders/1xPkj4Xd5DrvpeoA0xjXK1k7Fm57E6zZF?usp=sharing)의 Image-Generator 또는 Korean-Story-Generator압축파일을 내려받아 사용할 수 있다.
+---
 > 텍스트 생성 모델, 이미지 생성 모델을 사용하는 웹.
 >
 > pdf, docx 파일 생성 코드 모듈화
